@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'base.html'%}
+{% load thumbnail %}
+
+{% block title %}
+Последние обновления на сайте
+{% endblock title %}
+
+
+{% block main %}
+<div class="container py-5">
+  
+  {% include 'includes/switcher.html' %}
+  <article>
+    <h1> Последние обновления на сайте </h1>
+    {% load cache %}
+    {% cache 20 insex_page page_obj %}
+    {% for post in page_obj %}
+    {% include 'includes/post.html' with show_author_link=True show_group_link=True %}
+
+    {% if not forloop.last %}<hr>{% endif %}
+{% endfor %} 
+{% endcache %}
+{% include 'includes/paginator.html' %}
+  <!-- под последним постом нет линии -->
+</div>  
+{% endblock main %}
