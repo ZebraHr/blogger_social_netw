@@ -51,12 +51,14 @@ class PostPagesTests(TestCase):
         self.guest_client = Client()
         self.user = User.objects.create_user(username='HasNoName')
         self.authorized_client = Client()
-        self.authorized_client.force_login(PostPagesTests.user)
+        self.authorized_client.force_login(self.user)
         self.authorized_client_author = Client()
         self.authorized_client_author.force_login(PostPagesTests.user)
+        cache.clear()
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
+        cache.clear()
         templates_pages_names = {
             reverse('posts:index'): 'posts/index.html',
             reverse('posts:group_list', kwargs={'slug': self.group.slug}):
@@ -72,7 +74,7 @@ class PostPagesTests(TestCase):
         }
         for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
-                response = self.authorized_client.get(reverse_name)
+                response = self.authorized_client_author.get(reverse_name)
                 self.assertTemplateUsed(response, template)
 
     def test_pages_show_correct_context(self):
@@ -157,7 +159,7 @@ class PostPagesTests(TestCase):
 
     def test_edit_post_page_contains_correct_form(self):
         """Шаблон post_edit сформирован с правильным контекстом."""
-        response = self.authorized_client.get(reverse(
+        response = self.authorized_client_author.get(reverse(
             'posts:post_edit', kwargs={'post_id': self.post.id}))
         form_fields = {
             'text': forms.fields.CharField,
@@ -241,6 +243,7 @@ class PaginatorViewsTest(TestCase):
         self.user = User.objects.create_user(username='HasNoName')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+        cache.clear()
 
     def test_main_page_contains_ten_records(self):
         """Проверяем, что на страницах выводится по 10 постов"""

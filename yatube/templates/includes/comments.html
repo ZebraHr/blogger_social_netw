@@ -19,7 +19,7 @@
   <div class="media-body">
     <h5 class="mt-0">
       <a href="{% url 'posts:profile' comment.author.username %}">
-        {{ comment.author.username }}
+       <u> {{ comment.author.username }} </u>
 
       </a>
     </h5>
@@ -27,6 +27,11 @@
     <p>
       {{ comment.text }}
     </p>
+    {% if post.author == request.user %}
+    <a class="btn btn-sm btn-secondary rounded" href="{% url 'posts:comment_delete' comment.pk %}">
+        удалить комментарий
+      </a>
+      {% endif %}
   </div>
 </div>
 {% endfor %} 

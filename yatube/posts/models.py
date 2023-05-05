@@ -2,6 +2,7 @@ from django.db import models
 from core.models import CreatedModel
 
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 User = get_user_model()
 
@@ -45,7 +46,7 @@ class Post(CreatedModel):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:settings.SYMBOLS_SHOWN]
 
 
 class Comment(CreatedModel):
@@ -70,7 +71,7 @@ class Comment(CreatedModel):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:settings.SYMBOLS_SHOWN]
 
 
 class Follow(models.Model):
@@ -86,3 +87,7 @@ class Follow(models.Model):
         related_name='following',
         verbose_name='Автор'
     )
+
+    class Meta:
+        models.UniqueConstraint(fields=['user', 'author'],
+                                name='unique_ff')

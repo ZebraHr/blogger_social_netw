@@ -136,6 +136,8 @@ STATIC_URL = '/static/'
 
 POSTS_SHOWN = 10
 
+SYMBOLS_SHOWN = 15
+
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'posts:index'
 # LOGOUT_REDIRECT_URL = 'posts:index'
