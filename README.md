@@ -1,10 +1,9 @@
-# backend_community_homework
 # Yatube
 ### Описание
 Социальная сеть блогеров. Этот проект позволит пользователям публиковать личные дневники, подписываться на страницы других блоггеров и комментировать их.
 ### Технологии
-Python 3.9
-Django 2.2.19
+![Python](https://img.shields.io/badge/python-3.9-blue?logo=python)
+![Django](https://img.shields.io/badge/DJANGO-2.2.19-blue?logo=django&logoColor=white)
 ### Запуск проекта в dev-режиме
 - Установите и активируйте виртуальное окружение
 ```
